@@ -120,6 +120,33 @@ class SyntaxTest extends CompilableTestSupport {
         // end::number_type_suffixes_example[]
     }
 
+    void testValidIntegerLiterals() {
+        shouldCompile '''
+             def a = 2147483647I
+             def b = -2147483648I
+             def c = -2147483647I
+             def d = 9223372036854775807L
+             def e = -9223372036854775808L
+             def f = -9223372036854775807L
+         '''
+    }
+
+    void testInvalidIntegerLiteral() {
+        shouldNotCompile '''
+            // tag::invalid_integer_literal[]
+            def n = 2147483648I
+            // end::invalid_integer_literal[]
+        '''
+    }
+
+    void testInvalidLongLiteral() {
+        shouldNotCompile '''
+            // tag::invalid_long_literal[]
+            def n = 9223372036854775808L
+            // end::invalid_long_literal[]
+        '''
+    }
+
     void testVariableStoreBooleanValue() {
         shouldCompile '''
             @groovy.transform.Field boolean booleanField
